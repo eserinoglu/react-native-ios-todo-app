@@ -57,7 +57,7 @@ export default function Calendar() {
           {filteredTasks?.length === 0 && (
             <View className="items-center justify-center h-96">
               <Text className="text-black/50 tracking-tight text-center">
-                No tasks for {selectedDateString}
+                NO TASKS FOR {selectedDateString.toUpperCase()}
               </Text>
             </View>
           )}

@@ -85,6 +85,7 @@ export default function AddTask() {
             style={{ display: showDatePicker ? "flex" : "none" }}
             accentColor="#0E7AFE"
             display="spinner"
+            mode="date"
             minimumDate={new Date()}
             value={selectedDate}
             onChange={(event, date) => setSelectedDate(date)}
@@ -114,7 +115,12 @@ export default function AddTask() {
         <Pressable
           disabled={isPending}
           onPress={() =>
-            submitTask(taskName, taskNote, selectedDate, selectedTime)
+            submitTask(
+              taskName,
+              taskNote,
+              selectedDate.toDateString(),
+              selectedTime
+            )
           }
           className="bg-[#0E7AFE] mb-5 py-3 rounded-xl flex-row items-center space-x-2 justify-center mt-10"
         >

@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../supabase/supabase";
 import { useUser } from "../context/UserContext";
 
-export default function Profile() {
+export default function Profile({ navigation }) {
   const { userData } = useUser();
   const insets = useSafeAreaInsets();
   const settings = [
@@ -27,14 +27,9 @@ export default function Profile() {
       screen: "ChangePassword",
     },
     {
-      name: "Change phone number",
-      icon: "ios-phone-portrait",
-      screen: "ChangePhoneNumber",
-    },
-    {
-      name: "Change username",
-      icon: "ios-at",
-      screen: "ChangeUsername",
+      name: "Change email",
+      icon: "ios-mail",
+      screen: "ChangeEmail",
     },
   ];
   const logout = async () => {
@@ -68,7 +63,10 @@ export default function Profile() {
             scrollEnabled={false}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
-              <TouchableOpacity className="items-center flex-row justify-between p-3 border-b border-black/10">
+              <TouchableOpacity
+                onPress={() => navigation.push(item.screen)}
+                className="items-center flex-row justify-between p-3 border-b border-black/10"
+              >
                 <View className="flex-row items-center space-x-2">
                   <Ionicons name={item.icon} size={22} color="black" />
                   <Text className="text-base tracking-tight font-medium">

@@ -21,12 +21,25 @@ export const UserProvider = ({ children }) => {
     }
     setUserData(userData);
   };
+  const updateUserData = async (firstName, lastName, userId) => {
+    const { data, error } = await supabase
+      .from("users")
+      .update({ first_name: firstName, last_name: lastName })
+      .eq("id", userId)
+      .select("*");
+    if (error) {
+      alert(error.message);
+    }
+    if (!error) {
+      setUserData(data[0]);
+    }
+  };
   const fetchUserTasks = async (id) => {
+    const today = new Date();
     const { data: userTasks, error } = await supabase
       .from("tasks")
       .select("*")
-      .eq("user_id", id)
-      .order("date", { ascending: false });
+      .eq("user_id", id);
     if (error) {
       alert(error.message);
     }
@@ -85,7 +98,15 @@ export const UserProvider = ({ children }) => {
   }, []);
   return (
     <UserContext.Provider
-      value={{ user, userTasks, userData, addTask, completeTask, deleteTask }}
+      value={{
+        user,
+        userTasks,
+        userData,
+        addTask,
+        completeTask,
+        deleteTask,
+        updateUserData,
+      }}
     >
       {loading ? (
         <View className="absolute top-0 right-0 left-0 w-full h-full z-10 items-center justify-center">

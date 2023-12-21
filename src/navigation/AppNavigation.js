@@ -15,6 +15,9 @@ import AddTask from "../screens/AddTask";
 import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
 import TaskDetails from "../screens/TaskDetails";
+import ProfileEdit from "../screens/ProfileEdit";
+import ChangePassword from "../screens/ChangePassword";
+import ChangeEmail from "../screens/ChangeEmail";
 
 const TabNavigator = () => {
   return (
@@ -54,10 +57,21 @@ const TabNavigator = () => {
             <Ionicons name="ios-person-circle" size={32} color={color} />
           ),
         }}
-        name="Profile"
-        component={Profile}
+        name="User"
+        component={UserStack}
       />
     </Tab.Navigator>
+  );
+};
+
+const UserStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
+      <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+    </Stack.Navigator>
   );
 };
 

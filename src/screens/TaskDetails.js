@@ -10,6 +10,7 @@ export default function TaskDetails({ navigation, route }) {
   const insets = useSafeAreaInsets();
   const task = route.params.task;
   const [isCompleted, setIsCompleted] = React.useState(task.isCompleted);
+  const isExpired = new Date(task.date).getTime() < new Date().getTime();
 
   const removeTask = () => {
     Alert.alert(
@@ -106,7 +107,7 @@ export default function TaskDetails({ navigation, route }) {
           </View>
         </View>
         <View className="px-3 mt-5">
-          {!isCompleted && (
+          {!isCompleted && !isExpired && (
             <TouchableOpacity
               onPress={() => {
                 completeTask(task.id);

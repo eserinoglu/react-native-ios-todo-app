@@ -12,6 +12,9 @@ import TaskListItem from "../components/TaskListItem";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useUser } from "../context/UserContext";
+import TodaysTasks from "../components/TodaysTasks";
+import InThisWeek from "../components/InThisWeek";
+import DoneTasks from "../components/DoneTasks";
 
 export default function Home({ navigation }) {
   const { userData, userTasks } = useUser();
@@ -19,17 +22,17 @@ export default function Home({ navigation }) {
   const insets = useSafeAreaInsets();
   const todayTasks = userTasks?.filter(
     (task) =>
-      new Date(task.date).toDateString() === today.toDateString() &&
-      !task.isCompleted
+      !task.isCompleted &&
+      new Date(task.date).toDateString() === today.toDateString()
   );
   const in7Days = userTasks?.filter(
     (task) =>
-      userTasks.find((today) => today.id !== task.id) &&
       !task.isCompleted &&
+      new Date(task.date) > today &&
       new Date(task.date) <= new Date(today.setDate(today.getDate() + 7))
   );
   const doneTasks = userTasks?.filter(
-    (task) => task.isCompleted === true && new Date(task.date) < today
+    (task) => task.isCompleted && new Date(task.date) < today
   );
   return (
     <View style={{ paddingTop: insets.top + 10 }} className="flex-1 px-3">
@@ -69,80 +72,9 @@ export default function Home({ navigation }) {
             Add task
           </Text>
         </Pressable>
-        <View className="mb-7">
-          <Text className="text-black/50 tracking-tight ml-4 mb-2">TODAY</Text>
-          <FlatList
-            className="bg-white rounded-xl"
-            data={todayTasks}
-            keyExtractor={(item) => item.id}
-            scrollEnabled={false}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <TaskListItem
-                isInCalendar={false}
-                color={"text-red-500"}
-                task={item}
-              />
-            )}
-          />
-          {todayTasks?.length === 0 && (
-            <View className="p-3 rounded-xl bg-white">
-              <Text className="font-medium tracking-tight text-base text-black/60">
-                No tasks for today.
-              </Text>
-            </View>
-          )}
-        </View>
-        <View className="mb-7">
-          <Text className="text-black/50 tracking-tight ml-4 mb-2">
-            IN NEXT 7 DAYS
-          </Text>
-          <FlatList
-            className="bg-white rounded-xl"
-            data={in7Days}
-            keyExtractor={(item) => item.id}
-            scrollEnabled={false}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <TaskListItem
-                isInCalendar={false}
-                color={"text-yellow-400"}
-                task={item}
-              />
-            )}
-          />
-          {in7Days?.length === 0 && (
-            <View className="p-3 rounded-xl bg-white">
-              <Text className="font-medium tracking-tight text-base text-black/60">
-                No tasks in next 7 days.
-              </Text>
-            </View>
-          )}
-        </View>
-        <View className="mb-7">
-          <Text className="text-black/50 tracking-tight ml-4 mb-2">DONE</Text>
-          <FlatList
-            className="bg-white rounded-xl"
-            data={doneTasks}
-            keyExtractor={(item) => item.id}
-            scrollEnabled={false}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <TaskListItem
-                isInCalendar={false}
-                color={"text-green-400"}
-                task={item}
-              />
-            )}
-          />
-          {doneTasks?.length === 0 && (
-            <View className="p-3 rounded-xl bg-white">
-              <Text className="font-medium tracking-tight text-base text-black/60">
-                No completed tasks yet.
-              </Text>
-            </View>
-          )}
-        </View>
+        <TodaysTasks />
+        <InThisWeek />
+        <DoneTasks />
       </ScrollView>
     </View>
   );
