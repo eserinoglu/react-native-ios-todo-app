@@ -13,7 +13,7 @@ import { supabase } from "../supabase/supabase";
 import { useUser } from "../context/UserContext";
 
 export default function Profile({ navigation }) {
-  const { userData } = useUser();
+  const { userData, user } = useUser();
   const insets = useSafeAreaInsets();
   const settings = [
     {
@@ -25,11 +25,6 @@ export default function Profile({ navigation }) {
       name: "Change password",
       icon: "ios-lock-closed",
       screen: "ChangePassword",
-    },
-    {
-      name: "Change email",
-      icon: "ios-mail",
-      screen: "ChangeEmail",
     },
   ];
   const logout = async () => {
@@ -51,6 +46,7 @@ export default function Profile({ navigation }) {
           <Text className="text-xl font-semibold tracking-tight">
             {userData?.first_name} {userData?.last_name}
           </Text>
+          <Text className="text-black/60 tracking-tight">{user?.email}</Text>
         </View>
         <View className="mt-5">
           <Text className="text-black/50 tracking-tight ml-4 mb-2">

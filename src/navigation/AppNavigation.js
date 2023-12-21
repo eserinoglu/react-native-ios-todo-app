@@ -17,7 +17,6 @@ import SignUp from "../screens/SignUp";
 import TaskDetails from "../screens/TaskDetails";
 import ProfileEdit from "../screens/ProfileEdit";
 import ChangePassword from "../screens/ChangePassword";
-import ChangeEmail from "../screens/ChangeEmail";
 
 const TabNavigator = () => {
   return (
@@ -70,7 +69,6 @@ const UserStack = () => {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
-      <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
     </Stack.Navigator>
   );
 };

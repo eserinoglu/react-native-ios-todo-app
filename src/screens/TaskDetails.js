@@ -58,7 +58,7 @@ export default function TaskDetails({ navigation, route }) {
                   {isCompleted ? "COMPLETED" : "NOT COMPLETED"}
                 </Text>
               </View>
-              <View className="flex-row items-center space-x-4">
+              <View>
                 <Ionicons
                   onPress={() => {
                     removeTask();
@@ -67,7 +67,6 @@ export default function TaskDetails({ navigation, route }) {
                   size={24}
                   color="#0E7AFE"
                 />
-                <Ionicons name="ios-pencil" size={24} color="#0E7AFE" />
               </View>
             </View>
           </View>
@@ -101,7 +100,7 @@ export default function TaskDetails({ navigation, route }) {
             <View className="bg-white w-full p-3 rounded-xl flex-row items-center space-x-2 mt-1">
               <Ionicons name="ios-calendar" size={24} color="#00000060" />
               <Text className="text-base tracking-tight text-black/60">
-                {dayjs(task.date).format("HH:mm")}
+                {task.time.slice(0, 5)}
               </Text>
             </View>
           </View>
