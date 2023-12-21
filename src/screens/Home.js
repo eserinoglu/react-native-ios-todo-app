@@ -2,13 +2,11 @@ import {
   View,
   Text,
   ScrollView,
-  FlatList,
   Image,
   Pressable,
   RefreshControl,
 } from "react-native";
 import React from "react";
-import TaskListItem from "../components/TaskListItem";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useUser } from "../context/UserContext";
@@ -49,11 +47,6 @@ export default function Home({ navigation }) {
                 uri: userData?.profile_image,
               }}
               className="w-10 aspect-square rounded-full"
-            />
-            <Ionicons
-              name="ios-notifications-circle"
-              size={36}
-              color="#0E7AFE"
             />
           </View>
           <Text className="text-2xl font-semibold tracking-tight">
