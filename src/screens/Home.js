@@ -15,23 +15,8 @@ import InThisWeek from "../components/InThisWeek";
 import DoneTasks from "../components/DoneTasks";
 
 export default function Home({ navigation }) {
-  const { userData, userTasks } = useUser();
-  const today = new Date();
+  const { userData } = useUser();
   const insets = useSafeAreaInsets();
-  const todayTasks = userTasks?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.date).toDateString() === today.toDateString()
-  );
-  const in7Days = userTasks?.filter(
-    (task) =>
-      !task.isCompleted &&
-      new Date(task.date) > today &&
-      new Date(task.date) <= new Date(today.setDate(today.getDate() + 7))
-  );
-  const doneTasks = userTasks?.filter(
-    (task) => task.isCompleted && new Date(task.date) < today
-  );
   return (
     <View style={{ paddingTop: insets.top + 10 }} className="flex-1 px-3">
       <ScrollView
