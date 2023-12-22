@@ -16,7 +16,9 @@ export default function TodaysTasks() {
       <Text className="text-black/50 tracking-tight ml-4 mb-2">TODAY</Text>
       <FlatList
         className="bg-white rounded-xl"
-        data={tasks}
+        data={tasks.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )}
         keyExtractor={(item) => item.id}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}

@@ -10,7 +10,7 @@ export default function InThisWeek() {
     (task) =>
       !task.isCompleted &&
       new Date(task.date) >
-        new Date(today.getTime() + 0.1 * 24 * 60 * 60 * 1000) &&
+        new Date(today.getTime() + 0.2 * 24 * 60 * 60 * 1000) &&
       new Date(task.date) <= new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
   );
   return (

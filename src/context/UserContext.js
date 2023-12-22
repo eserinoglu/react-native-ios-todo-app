@@ -45,13 +45,12 @@ export const UserProvider = ({ children }) => {
     }
     setUserTasks(userTasks);
   };
-  const addTask = async (taskName, taskNote, taskDate, taskTime) => {
+  const addTask = async (taskName, taskNote, taskDate) => {
     const { data: task, error } = await supabase.from("tasks").insert([
       {
         title: taskName,
         notes: taskNote,
         date: taskDate,
-        time: dayjs(taskTime).format("HH:mm:ss"),
         user_id: user.id,
       },
     ]);

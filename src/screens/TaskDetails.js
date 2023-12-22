@@ -148,7 +148,7 @@ export default function TaskDetails({ navigation, route }) {
             <View className="bg-white w-full p-3 rounded-xl flex-row items-center space-x-2 mt-1">
               <Ionicons name="ios-calendar" size={24} color="#00000060" />
               <Text className="text-base tracking-tight text-black/60">
-                {task.time}
+                {dayjs(taskDate).format("hh:mm A")}
               </Text>
             </View>
           </View>

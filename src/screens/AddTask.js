@@ -18,21 +18,18 @@ export default function AddTask() {
   const { addTask } = useUser();
   const insets = useSafeAreaInsets();
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedTime, setSelectedTime] = React.useState(new Date());
   const [showDatePicker, setShowDatePicker] = React.useState(false);
-  const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [taskName, setTaskName] = React.useState("");
   const [taskNote, setTaskNote] = React.useState("");
   const [isPending, setIsPending] = React.useState(false);
 
-  const submitTask = async (taskName, taskNote, selectedDate, selectedTime) => {
+  const submitTask = async (taskName, taskNote, selectedDate) => {
     setIsPending(true);
-    await addTask(taskName, taskNote, selectedDate, selectedTime);
+    await addTask(taskName, taskNote, selectedDate);
     setIsPending(false);
     setTaskName("");
     setTaskNote("");
     setSelectedDate(new Date());
-    setSelectedTime(new Date());
     bottomSheetRef.current?.expand();
   };
 
@@ -78,50 +75,24 @@ export default function AddTask() {
           >
             <Ionicons name="ios-calendar" size={24} color="#00000060" />
             <Text className="text-base tracking-tight text-black/60">
-              {dayjs(selectedDate).format("DD MMMM YYYY")}
+              {dayjs(selectedDate).format("DD MMMM YYYY hh:mm A")}
             </Text>
           </Pressable>
           <RNDateTimePicker
             style={{ display: showDatePicker ? "flex" : "none" }}
             accentColor="#0E7AFE"
             display="spinner"
-            mode="date"
+            mode="datetime"
             minimumDate={new Date()}
             value={selectedDate}
-            onChange={(event, date) => setSelectedDate(date)}
-          />
-        </View>
-        <View className="mt-4">
-          <Text className="text-black/50 tracking-tight ml-3">TIME</Text>
-          <Pressable
-            onPress={() => setShowTimePicker(!showTimePicker)}
-            className="bg-white w-full p-3 rounded-xl flex-row items-center space-x-2 mt-1"
-          >
-            <Ionicons name="ios-calendar" size={24} color="#00000060" />
-            <Text className="text-base tracking-tight text-black/60">
-              {dayjs(selectedTime).format("hh:mm")}
-            </Text>
-          </Pressable>
-          <RNDateTimePicker
-            is24Hour={false}
-            style={{ display: showTimePicker ? "flex" : "none" }}
-            mode="time"
-            accentColor="#0E7AFE"
-            display="spinner"
-            value={selectedTime}
-            onChange={(event, date) => setSelectedTime(date)}
+            onChange={(event, date) => {
+              setSelectedDate(date);
+            }}
           />
         </View>
         <Pressable
           disabled={isPending}
-          onPress={() =>
-            submitTask(
-              taskName,
-              taskNote,
-              selectedDate.toDateString(),
-              selectedTime
-            )
-          }
+          onPress={() => submitTask(taskName, taskNote, selectedDate)}
           className="bg-[#0E7AFE] mb-5 py-3 rounded-xl flex-row items-center space-x-2 justify-center mt-10"
         >
           {isPending ? (
