@@ -133,8 +133,8 @@ export default function TaskDetails({ navigation, route }) {
             {isEditMode && (
               <RNDateTimePicker
                 value={new Date(taskDate)}
-                mode="date"
-                display="inline"
+                mode="datetime"
+                display="spinner"
                 onChange={(event, date) => {
                   setTaskDate(date);
                 }}
