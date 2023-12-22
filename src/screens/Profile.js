@@ -40,9 +40,6 @@ export default function Profile({ navigation }) {
             }}
             className="w-14 aspect-square rounded-full"
           />
-          <Pressable>
-            <Text className="text-blue-600 text-xs">Change image</Text>
-          </Pressable>
           <Text className="text-xl font-semibold tracking-tight">
             {userData?.first_name} {userData?.last_name}
           </Text>

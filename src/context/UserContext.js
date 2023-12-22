@@ -86,6 +86,22 @@ export const UserProvider = ({ children }) => {
       fetchUserTasks(user.id);
     }
   };
+  const updateTask = async (taskId, taskName, taskNote, taskDate) => {
+    const { data: task, error } = await supabase
+      .from("tasks")
+      .update({
+        title: taskName,
+        notes: taskNote,
+        date: taskDate,
+      })
+      .eq("id", taskId);
+    if (error) {
+      alert(error.message);
+    }
+    if (!error) {
+      fetchUserTasks(user.id);
+    }
+  };
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
@@ -93,6 +109,8 @@ export const UserProvider = ({ children }) => {
         fetchUserData(session.user.id)
           .then(() => fetchUserTasks(session.user.id))
           .then(() => setLoading(false));
+      } else {
+        setLoading(false);
       }
     });
   }, []);
@@ -106,6 +124,7 @@ export const UserProvider = ({ children }) => {
         completeTask,
         deleteTask,
         updateUserData,
+        updateTask,
       }}
     >
       {loading ? (

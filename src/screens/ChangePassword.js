@@ -17,6 +17,9 @@ export default function ChangePassword({ navigation }) {
   const [newPassword, setNewPassword] = React.useState("");
 
   const changePassword = async () => {
+    if (!currentPassword || !newPassword) {
+      return alert("Please fill all fields.");
+    }
     setIsPending(true);
     const { error } = await supabase.auth.updateUser({
       password: newPassword,

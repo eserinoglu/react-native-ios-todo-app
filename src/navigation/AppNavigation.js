@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "../context/UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect } from "react";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,6 +19,9 @@ import SignUp from "../screens/SignUp";
 import TaskDetails from "../screens/TaskDetails";
 import ProfileEdit from "../screens/ProfileEdit";
 import ChangePassword from "../screens/ChangePassword";
+import OnBoarding1 from "../screens/onboarding/OnBoarding1";
+import OnBoarding2 from "../screens/onboarding/OnBoarding2";
+import OnBoarding3 from "../screens/onboarding/OnBoarding3";
 
 const TabNavigator = () => {
   return (
@@ -74,7 +79,19 @@ const UserStack = () => {
 };
 
 export default function AppNavigation() {
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  useEffect(() => {
+    AsyncStorage.getItem("alreadyLaunched").then((value) => {
+      if (value == null) {
+        AsyncStorage.setItem("alreadyLaunched", "true");
+        setIsFirstLaunch(true);
+      } else {
+        setIsFirstLaunch(false);
+      }
+    });
+  }, []);
   const { user } = useUser();
+  if (isFirstLaunch === null) return null;
   return (
     <NavigationContainer>
       {user ? (
@@ -83,9 +100,15 @@ export default function AppNavigation() {
           <Stack.Screen name="TaskDetails" component={TaskDetails} />
         </Stack.Navigator>
       ) : (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          initialRouteName={isFirstLaunch ? "OnBoarding1" : "Login"}
+          screenOptions={{ headerShown: false }}
+        >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="OnBoarding1" component={OnBoarding1} />
+          <Stack.Screen name="OnBoarding2" component={OnBoarding2} />
+          <Stack.Screen name="OnBoarding3" component={OnBoarding3} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

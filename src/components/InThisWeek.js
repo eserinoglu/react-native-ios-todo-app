@@ -10,7 +10,7 @@ export default function InThisWeek() {
     (task) =>
       !task.isCompleted &&
       new Date(task.date) >
-        new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000) &&
+        new Date(today.getTime() + 0.1 * 24 * 60 * 60 * 1000) &&
       new Date(task.date) <= new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
   );
   return (
@@ -20,7 +20,7 @@ export default function InThisWeek() {
       </Text>
       <FlatList
         className="bg-white rounded-xl"
-        data={thisWeeksTasks.sort(
+        data={thisWeeksTasks?.sort(
           (a, b) => new Date(a.date) - new Date(b.date)
         )}
         keyExtractor={(item) => item.id}

@@ -9,7 +9,6 @@ import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "../context/UserContext";
-import { supabase } from "../supabase/supabase";
 
 export default function ProfileEdit({ navigation }) {
   const { userData, updateUserData } = useUser();
@@ -19,6 +18,9 @@ export default function ProfileEdit({ navigation }) {
   const [isPending, setIsPending] = React.useState(false);
 
   const updateProfile = async () => {
+    if (!firstName || !lastName) {
+      return alert("Please fill all fields.");
+    }
     setIsPending(true);
     await updateUserData(firstName, lastName, userData.id);
     setIsPending(false);

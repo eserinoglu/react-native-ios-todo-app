@@ -21,15 +21,24 @@ export default function SignUp({ navigation }) {
 
   const signUp = async () => {
     setIsPending(true);
-    const { error } = await supabase.auth.signUp({
+    const { data: authData, error } = await supabase.auth.signUp({
       email,
       password,
     });
-    setIsPending(false);
     if (error) {
       setIsPending(false);
       alert(error.message);
     }
+    if (authData) {
+      const { data, error } = await supabase
+        .from("users")
+        .update({
+          first_name: firstName,
+          last_name: lastName,
+        })
+        .eq("id", authData.user.id);
+    }
+    setIsPending(false);
   };
   return (
     <View
