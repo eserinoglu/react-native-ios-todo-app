@@ -35,6 +35,7 @@ export default function TaskDetails({ navigation, route }) {
         },
         {
           text: "Delete",
+          style: "destructive",
           onPress: () => {
             deleteTask(task.id).then(() => navigation.pop());
           },
